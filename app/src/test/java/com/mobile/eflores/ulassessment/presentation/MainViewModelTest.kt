@@ -5,9 +5,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.mobile.eflores.livedataapi.util.LiveDataResult
 import com.mobile.eflores.ulassessment.MainViewModel
-import com.mobile.eflores.ulassessment.data.Comment
-import com.mobile.eflores.ulassessment.data.Post
-import com.mobile.eflores.ulassessment.data.User
+import com.mobile.eflores.ulassessment.data.*
 import com.mobile.eflores.ulassessment.domain.GetUsers
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -122,6 +120,64 @@ class MainViewModelTest {
 
         assert(mainViewModel.repositoriesLiveDataComments.value != null)
         assert(mainViewModel.repositoriesLiveDataComments.value!!.status == LiveDataResult.STATUS.ERROR)
+    }
+
+    @Test
+    fun testFetchAlbums_Positive() {
+        var jsonString =
+            "[{\"userId\":1,\"id\":1,\"title\":\"quidem molestiae enim\"},{\"userId\":1,\"id\":2,\"title\":\"sunt qui excepturi placeat culpa\"},{\"userId\":1,\"id\":3,\"title\":\"omnis laborum odio\"}]";
+        val listAlbumType = object : TypeToken<List<Album>>() {}.type
+        val listAlbum = Gson().fromJson<List<Album>>(jsonString, listAlbumType)
+
+        coEvery { getUsers.executeAlbum(any()) } returns listAlbum
+
+        mainViewModel.repositoriesLiveDataAlbums.observeForever {}
+
+        mainViewModel.fetchAlbums(1)
+
+        assert(mainViewModel.repositoriesLiveDataAlbums.value != null)
+        assert(mainViewModel.repositoriesLiveDataAlbums.value!!.status == LiveDataResult.STATUS.SUCCESS)
+    }
+
+    @Test
+    fun testFetchAlbums_Negative() {
+        coEvery { getUsers.executeAlbum(any()) } coAnswers { throw Exception("No network") }
+
+        mainViewModel.repositoriesLiveDataAlbums.observeForever {}
+
+        mainViewModel.fetchAlbums(1)
+
+        assert(mainViewModel.repositoriesLiveDataAlbums.value != null)
+        assert(mainViewModel.repositoriesLiveDataAlbums.value!!.status == LiveDataResult.STATUS.ERROR)
+    }
+
+    @Test
+    fun testFetchPhotos_Positive() {
+        var jsonString =
+            "[{\"albumId\":1,\"id\":1,\"title\":\"accusamus beatae ad facilis cum similique qui sunt\",\"url\":\"https://via.placeholder.com/600/92c952\",\"thumbnailUrl\":\"https://via.placeholder.com/150/92c952\"},{\"albumId\":1,\"id\":2,\"title\":\"reprehenderit est deserunt velit ipsam\",\"url\":\"https://via.placeholder.com/600/771796\",\"thumbnailUrl\":\"https://via.placeholder.com/150/771796\"},{\"albumId\":1,\"id\":3,\"title\":\"officia porro iure quia iusto qui ipsa ut modi\",\"url\":\"https://via.placeholder.com/600/24f355\",\"thumbnailUrl\":\"https://via.placeholder.com/150/24f355\"}]";
+        val listPhotoType = object : TypeToken<List<Photo>>() {}.type
+        val listPhoto = Gson().fromJson<List<Photo>>(jsonString, listPhotoType)
+
+        coEvery { getUsers.executePhoto(any()) } returns listPhoto
+
+        mainViewModel.repositoriesLiveDataPhotos.observeForever {}
+
+        mainViewModel.fetchPhotos(1)
+
+        assert(mainViewModel.repositoriesLiveDataPhotos.value != null)
+        assert(mainViewModel.repositoriesLiveDataPhotos.value!!.status == LiveDataResult.STATUS.SUCCESS)
+    }
+
+    @Test
+    fun testFetchPhotos_Negative() {
+        coEvery { getUsers.executePhoto(any()) } coAnswers { throw Exception("No network") }
+
+        mainViewModel.repositoriesLiveDataPhotos.observeForever {}
+
+        mainViewModel.fetchPhotos(1)
+
+        assert(mainViewModel.repositoriesLiveDataPhotos.value != null)
+        assert(mainViewModel.repositoriesLiveDataPhotos.value!!.status == LiveDataResult.STATUS.ERROR)
     }
 
 }

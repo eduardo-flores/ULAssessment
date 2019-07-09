@@ -2,10 +2,7 @@ package com.mobile.eflores.ulassessment.domain
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.mobile.eflores.ulassessment.data.Comment
-import com.mobile.eflores.ulassessment.data.Post
-import com.mobile.eflores.ulassessment.data.User
-import com.mobile.eflores.ulassessment.data.UserRepository
+import com.mobile.eflores.ulassessment.data.*
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import io.mockk.MockKAnnotations
@@ -121,6 +118,68 @@ class GetUsersTest {
         coEvery { userRepository.fetchComments(1) } throws IllegalStateException("err")
         try {
             val list = getUsers.executeComment(1)
+        } catch (e: Exception) {
+            assert(e is IllegalStateException)
+        }
+    }
+
+    @Test
+    fun testFetchAlbums_Positive() = runBlocking {
+        var jsonString =
+            "[{\"userId\":1,\"id\":1,\"title\":\"quidem molestiae enim\"},{\"userId\":1,\"id\":2,\"title\":\"sunt qui excepturi placeat culpa\"},{\"userId\":1,\"id\":3,\"title\":\"omnis laborum odio\"}]";
+        val listAlbumType = object : TypeToken<List<Album>>() {}.type
+        val listAlbum = Gson().fromJson<List<Album>>(jsonString, listAlbumType)
+
+        coEvery { userRepository.fetchAlbums(any()) } returns listAlbum
+
+        val list = getUsers.executeAlbum(1)
+
+        assertNotNull(list)
+        assert(list[0] is Album)
+        assertEquals(1, list[0].userId)
+        assertEquals(1, list[0].id)
+        assertEquals("quidem molestiae enim", list[0].title)
+        assertEquals(1, list[1].userId)
+        assertEquals(2, list[1].id)
+        assertEquals("sunt qui excepturi placeat culpa", list[1].title)
+    }
+
+    @Test
+    fun testFetchAlbums_Negative() = runBlocking {
+        coEvery { userRepository.fetchAlbums(1) } throws IllegalStateException("err")
+        try {
+            val list = getUsers.executeAlbum(1)
+        } catch (e: Exception) {
+            assert(e is IllegalStateException)
+        }
+    }
+
+    @Test
+    fun testFetchPhotos_Positive() = runBlocking {
+        var jsonString =
+            "[{\"albumId\":1,\"id\":1,\"title\":\"accusamus beatae ad facilis cum similique qui sunt\",\"url\":\"https://via.placeholder.com/600/92c952\",\"thumbnailUrl\":\"https://via.placeholder.com/150/92c952\"},{\"albumId\":1,\"id\":2,\"title\":\"reprehenderit est deserunt velit ipsam\",\"url\":\"https://via.placeholder.com/600/771796\",\"thumbnailUrl\":\"https://via.placeholder.com/150/771796\"},{\"albumId\":1,\"id\":3,\"title\":\"officia porro iure quia iusto qui ipsa ut modi\",\"url\":\"https://via.placeholder.com/600/24f355\",\"thumbnailUrl\":\"https://via.placeholder.com/150/24f355\"}]";
+        val listPhotoType = object : TypeToken<List<Photo>>() {}.type
+        val listPhoto = Gson().fromJson<List<Photo>>(jsonString, listPhotoType)
+
+        coEvery { userRepository.fetchPhotos(any()) } returns listPhoto
+
+        val list = getUsers.executePhoto(1)
+
+        assertNotNull(list)
+        assert(list[0] is Photo)
+        assertEquals(1, list[0].albumId)
+        assertEquals(2, list[0].id)
+        assertEquals("accusamus beatae ad facilis cum similique qui sunt", list[0].title)
+        assertEquals(1, list[1].albumId)
+        assertEquals(2, list[1].id)
+        assertEquals("https://via.placeholder.com/600/771796", list[1].url)
+    }
+
+    @Test
+    fun testFetchPhotos_Negative() = runBlocking {
+        coEvery { userRepository.fetchPhotos(1) } throws IllegalStateException("err")
+        try {
+            val list = getUsers.executePhoto(1)
         } catch (e: Exception) {
             assert(e is IllegalStateException)
         }
