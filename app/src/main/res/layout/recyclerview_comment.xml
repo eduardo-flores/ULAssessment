@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:padding="16dp"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="wrap_content"
+                                                   android:background="@drawable/border"
+                                                   android:layout_marginBottom="8dp">
+    <TextView
+            android:id="@+id/labelCommentName"
+            android:text="@string/tv_comment_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textStyle="bold"/>
+    <TextView
+            android:id="@+id/commentName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:text="User Name"
+            app:layout_constraintBaseline_toBaselineOf="@+id/labelCommentName"
+            app:layout_constraintStart_toStartOf="@+id/commentEmail" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"/>
+    <TextView
+            android:id="@+id/labelCommentEmail"
+            android:text="@string/tv_comment_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/labelCommentName"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textStyle="bold"/>
+    <TextView
+            android:id="@+id/commentEmail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:text="User Email"
+            app:layout_constraintBaseline_toBaselineOf="@+id/labelCommentEmail"
+            app:layout_constraintStart_toStartOf="@+id/commentBody" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"/>
+    <TextView
+            android:id="@+id/labelCommentBody"
+            android:text="@string/tv_comment_body"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/labelCommentEmail"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textStyle="bold"/>
+    <TextView
+            android:id="@+id/commentBody"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:text="User Email"
+            app:layout_constraintBaseline_toBaselineOf="@+id/labelCommentBody"
+            app:layout_constraintStart_toEndOf="@+id/labelCommentBody" android:layout_marginStart="16dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

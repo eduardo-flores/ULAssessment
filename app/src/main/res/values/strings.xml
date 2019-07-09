@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">UL Assessment</string>
+    <string name="title_users">Users</string>
+    <string name="title_user">User</string>
+    <string name="title_posts">Posts</string>
+    <string name="title_post">Post</string>
+    <string name="title_comments">Comments</string>
+
+    <string name="action_home">Home</string>
+    <string name="action_maps">Map</string>
+
+    <string name="tv_id">ID</string>
+    <string name="tv_name">Name</string>
+    <string name="tv_username">Username</string>
+    <string name="tv_email">Email</string>
+    <string name="tv_address">Address</string>
+    <string name="tv_street">Street</string>
+    <string name="tv_suite">Suite</string>
+    <string name="tv_city">City</string>
+    <string name="tv_zipcode">Zipcode</string>
+    <string name="tv_geo">Geolocation</string>
+    <string name="tv_lat">Latitude</string>
+    <string name="tv_lng">Longitude</string>
+    <string name="tv_phone">Phone</string>
+    <string name="tv_website">Website</string>
+    <string name="tv_company">Company</string>
+    <string name="tv_company_name">Name</string>
+    <string name="tv_catchPhrase">Description</string>
+    <string name="tv_bs">Segment</string>
+    <string name="tv_post">Post</string>
+    <string name="tv_title">Title</string>
+    <string name="tv_body">Message</string>
+
+    <string name="tv_comment">Comment</string>
+    <string name="tv_comment_name">Name</string>
+    <string name="tv_comment_email">Email</string>
+    <string name="tv_comment_body">Message</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_option">OptionActivity</string>
+</resources>
