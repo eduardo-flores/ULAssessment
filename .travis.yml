@@ -17,7 +17,6 @@ before_install:
 script:
   - ./gradlew assembleDebug
 
-
 deploy:
   provider: releases
   api_key: $GITHUB_API_KEY
