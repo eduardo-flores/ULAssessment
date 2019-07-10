@@ -33,7 +33,7 @@ class RecyclerAdapter(private val listMessage: List<User>) :
 
         fun bindMessage(user: User) {
             this.user = user
-            view.userUsername.text = user.username
+            view.userName.text = user.name
             view.userStreet.text = user.address.street
             view.userSuite.text = user.address.suite
             view.userZipcode.text = user.address.zipcode
