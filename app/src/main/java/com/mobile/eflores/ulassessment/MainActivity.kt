@@ -3,6 +3,7 @@ package com.mobile.eflores.ulassessment
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -68,9 +69,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         fab.setOnClickListener(View.OnClickListener {
-            startActivity(Intent(this, MapsActivity::class.java).apply {
-                putExtra(INTENT_EXTRA_USERS, listUser as Serializable)
-            })
+            try {
+                startActivity(Intent(this, MapsActivity::class.java).apply {
+                    putExtra(INTENT_EXTRA_USERS, listUser as Serializable)
+
+                })
+            } catch (e: UninitializedPropertyAccessException) {
+                Toast.makeText(this, "No users to show", Toast.LENGTH_SHORT).show()
+            }
         })
 
         this.mainViewModel.repositoriesLiveData.observe(this, this.dataObserver)
